@@ -57,14 +57,16 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <li class="nav-header">LAPORAN</li>
 
         <li class="nav-item">
-            <a href="../pages/laporan_penjualan.php" class="nav-link <?= ($current_page == 'laporan_penjualan.php') ? 'active' : '' ?>">
+            <a href="<?= $base ?>pages/laporan_penjualan.php"
+              class="nav-link <?= ($current_page == 'laporan_penjualan.php') ? 'active' : '' ?>">
                 <i class="nav-icon fas fa-chart-line"></i>
                 <p>Laporan Penjualan</p>
             </a>
         </li>
 
         <li class="nav-item">
-            <a href="../pages/laporan_service.php" class="nav-link <?= ($current_page == 'laporan_service.php') ? 'active' : '' ?>">
+            <a href="<?= $base ?>pages/laporan_service.php"
+              class="nav-link <?= ($current_page == 'laporan_service.php') ? 'active' : '' ?>">
                 <i class="nav-icon fas fa-tools"></i>
                 <p>Laporan Service</p>
             </a>

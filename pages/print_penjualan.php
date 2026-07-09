@@ -56,7 +56,75 @@ $totalTransaksi=0;
 <meta charset="utf-8">
 <title>Cetak Laporan Penjualan</title>
 <style>
-body{font-family:"Times New Roman",serif;font-size:12pt;margin:30px}
+body{
+    font-family:"Times New Roman", serif;
+    font-size:12;
+    margin:30px;
+}
+
+.judul{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.judul h2{
+    margin:0;
+    font-size:24pt;
+    font-weight:bold;
+}
+
+.periode{
+    margin-top:10px;
+    font-size:13pt;
+    font-weight:bold;
+}
+
+.deskripsi{
+    width:85%;
+    margin:15px auto;
+    font-size:12pt;
+    line-height:1.6;
+    text-align:center;
+}
+
+hr{
+    margin-top:18px;
+    margin-bottom:25px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+table th,
+table td{
+    border:1px solid #000;
+    padding:8px 10px;
+    vertical-align:middle;
+    font-size:11pt;
+}
+
+table th{
+    text-align:center;
+    font-weight:bold;
+    background:#f5f5f5;
+}
+
+.right{
+    text-align:right;
+}
+
+.center{
+    text-align:center;
+}
+
 h2,h3,p{text-align:center;margin:2px}
 .info{margin:20px 0}
 .info table{border:none}
@@ -74,18 +142,30 @@ table.laporan th{text-align:center}
 </head>
 <body onload="window.print()">
 
-<h2>PT. DEALER MOBIL</h2>
-<h3>LAPORAN PENJUALAN MOBIL</h3>
-<hr>
+<div class="judul">
 
-<div class="info">
-<table>
-<tr><td>Periode</td><td>: <?= $tgl_awal!=""?$tgl_awal." s/d ".$tgl_akhir:"Semua Periode"; ?></td></tr>
-<tr><td>Merk</td><td>: <?= $merk!=""?$merk:"Semua"; ?></td></tr>
-<tr><td>Tipe</td><td>: <?= $tipe!=""?$tipe:"Semua"; ?></td></tr>
-<tr><td>Tahun</td><td>: <?= $tahun!=""?$tahun:"Semua"; ?></td></tr>
-<tr><td>Transmisi</td><td>: <?= $transmisi!=""?$transmisi:"Semua"; ?></td></tr>
-</table>
+    <h2>LAPORAN PENJUALAN MOBIL</h2>
+
+    <div class="periode">
+        Periode :
+        <?php
+        if($tgl_awal != "" && $tgl_akhir != ""){
+            echo date('d-m-Y',strtotime($tgl_awal));
+            echo " s/d ";
+            echo date('d-m-Y',strtotime($tgl_akhir));
+        }else{
+            echo "Semua Periode";
+        }
+        ?>
+    </div>
+
+    <div class="deskripsi">
+        Laporan ini menyajikan rekapitulasi data penjualan mobil berdasarkan periode dan filter yang dipilih.
+    </div>
+
+    <hr>
+
+</div>
 </div>
 
 <table class="laporan">
@@ -111,13 +191,19 @@ $totalTransaksi++;
 <tr>
 <td><?= $no++; ?></td>
 <td><?= date('d-m-Y',strtotime($d['tanggal'])); ?></td>
-<td><?= htmlspecialchars($d['nama']); ?></td>
+<td style="white-space:nowrap;">
+    <?= htmlspecialchars($d['nama']); ?>
+</td>
 <td><?= htmlspecialchars($d['merk']); ?></td>
 <td><?= htmlspecialchars($d['tipe']); ?></td>
 <td><?= htmlspecialchars($d['tahun']); ?></td>
 <td><?= htmlspecialchars($d['transmisi']); ?></td>
-<td class="right">Rp <?= number_format($d['harga'],0,",","."); ?></td>
-<td class="right">Rp <?= number_format($d['total'],0,",","."); ?></td>
+<td class="right" style="white-space:nowrap;">
+    Rp <?= number_format($d['harga'],0,",","."); ?>
+</td>
+<td class="right" style="white-space:nowrap;">
+    Rp <?= number_format($d['total'],0,",","."); ?>
+</td>
 </tr>
 <?php endwhile; ?>
 </tbody>
@@ -125,10 +211,29 @@ $totalTransaksi++;
 
 <br>
 
-<table style="width:40%;float:right">
-<tr><td>Jumlah Transaksi</td><td>: <?= $totalTransaksi; ?></td></tr>
-<tr><td>Jumlah Unit</td><td>: <?= $totalUnit; ?></td></tr>
-<tr><td>Total Pendapatan</td><td>: Rp <?= number_format($totalPendapatan,0,",","."); ?></td></tr>
+<table style="
+width:320px;
+float:right;
+margin-top:20px;
+border-collapse:collapse;
+font-size:12pt;
+">
+<tr>
+    <td><strong>Jumlah Transaksi</strong></td>
+    <td class="right"><?= $totalTransaksi; ?></td>
+</tr>
+
+<tr>
+    <td><strong>Jumlah Unit</strong></td>
+    <td class="right"><?= $totalUnit; ?></td>
+</tr>
+
+<tr>
+    <td><strong>Total Pendapatan</strong></td>
+    <td class="right">
+        Rp <?= number_format($totalPendapatan,0,",","."); ?>
+    </td>
+</tr>
 </table>
 
 <div style="clear:both"></div>
@@ -139,8 +244,10 @@ $totalTransaksi++;
 <td style="text-align:center">
 Tasikmalaya, <?= date('d-m-Y'); ?><br><br>
 Administrator
-<br><br><br><br>
-(................................)
+
+<br><br><br><br><br>
+
+(____________________)
 </td>
 </tr>
 </table>
